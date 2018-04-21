@@ -11,17 +11,23 @@ export default class NotesContainer extends Component {
         super(props);
 
         this.state = { notes: List() };
+
+        this.LoadData = this.LoadData.bind(this);
+    }
+
+    LoadData() {
+        getAllNotes().then(res => {
+            this.setState({ notes: fromJS(res.data) });
+        })
     }
 
     componentDidMount() {
-        const notes = getAllNotes().then(res => {
-            this.setState({ notes: fromJS(res.data) });
-        });
+        this.LoadData();
     }
-    
+
     render() {
         return (
-            <NotesGrid {...this.state}/>
+            <NotesGrid {...this.state} /> 
         )
     }
 }
