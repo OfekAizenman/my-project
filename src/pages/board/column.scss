@@ -1,0 +1,32 @@
+:local .wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+:local .container {
+    margin: 8px;
+    display: flex;
+    flex-direction: column;
+}
+
+ :local .header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+}
+
+:local .title {
+    padding: 8px;
+    cursor: -webkit-grab;
+    transition: background-color ease 0.2s;
+    flex-grow: 1;
+    user-select: none;
+    position: relative;
+
+    &:focus {
+      outline: 2px solid purple;
+      outline-offset: 2px;
+    }
+}
