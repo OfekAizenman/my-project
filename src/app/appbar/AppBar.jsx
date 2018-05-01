@@ -5,7 +5,7 @@ import MuiAppBar from 'material-ui/AppBar';
 import TextField from 'material-ui/TextField';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
-import { drawerWidth } from '../../../globals/variables';
+import { drawerWidth } from '../../globals/variables';
 import { withStyles } from 'material-ui/styles';
 
 const styles = theme => ({

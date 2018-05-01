@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import MuiDrawer from 'material-ui/Drawer';
-import Divider from 'material-ui/Divider';
 import Avatar from 'material-ui/Avatar';
+import Divider from 'material-ui/Divider';
+import Icon from 'material-ui/Icon';
 import Typography from 'material-ui/Typography';
-import { MenuItem } from 'material-ui/Menu';
-import grey from 'material-ui/colors/grey';
-import { drawerWidth } from '../../../globals/variables';
+import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
+import { drawerWidth } from '../../globals/variables';
+import { routes } from '../routes/index';
+import AssignmentIcon from 'material-ui-icons/Assignment';
+import blue from 'material-ui/colors/blue';
 import { withStyles } from 'material-ui/styles';
 
 const styles = theme => ({
@@ -31,9 +35,17 @@ const styles = theme => ({
 
     },
     userEmail: {
-        color: grey[400],
         fontSize: '0.75rem',
-    }
+    },
+    link: {
+        textDecoration: 'none',
+    },
+    linkActive: {
+        '& $primary': {
+            color: blue[500],
+          },
+    },
+    primary: {}
 });
 
 const propTypes = {
@@ -42,20 +54,32 @@ const propTypes = {
 
 class Drawer extends Component {
     render() {
-        const { classes } = this.props;
+        const { classes, location } = this.props;
 
-        debugger
-    
         return (
             <MuiDrawer variant="permanent" classes={{ paper: classes.root }}>
                 <div className={classes.header}>
                     <Avatar>OA</Avatar>
                     <div className={classes.userDetails}>
                         <Typography variant='subheading'>Ofek Aizenman</Typography>
-                        <Typography className={classes.userEmail}>ofek.aizenman@gmail.com</Typography>
+                        <Typography className={classes.userEmail} color='textSecondary'>ofek.aizenman@gmail.com</Typography>
                     </div>
                 </div>
                 <Divider />
+                <div>
+                    {routes.map(route => {
+                        return (
+                            <NavLink key={route.id} to={route.path} exact={route.exact} className={classes.link} activeClassName={classes.linkActive}>
+                                <ListItem button>
+                                    <ListItemIcon>
+                                        {route.icon}
+                                    </ListItemIcon>
+                                    <ListItemText classes={{ primary: classes.primary }} primary={route.title} />
+                                </ListItem>
+                            </NavLink>
+                        )
+                    })}
+                </div>
             </MuiDrawer>
         )
     }

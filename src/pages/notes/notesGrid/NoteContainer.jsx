@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { deleteNote } from '../../../managers/notesManager';
+import { deleteNote } from '../../../api/notesApi';
 import Note from './Note';
 
 export default class NoteContainer extends Component {

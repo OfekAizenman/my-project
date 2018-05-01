@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { addNote } from '../../../managers/notesManager';
+import { addNote } from '../../../api/notesApi';
 import AddNote from './AddNote';
 
 export default class AddNoteContainer extends Component {

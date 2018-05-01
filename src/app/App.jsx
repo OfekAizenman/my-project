@@ -2,10 +2,11 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import AppBar from './appbar';
+import AppBar from './appBar';
 import Drawer from './drawer';
-import Notes from '../pages';
-import { drawerWidth } from '../../globals/variables';
+import Main from './main';
+import { Notes } from '../pages';
+import { drawerWidth } from '../globals/variables';
 import { withStyles } from 'material-ui/styles';
 
 const styles = theme => ({
@@ -19,19 +20,7 @@ const styles = theme => ({
     display: 'flex',
     width: '100%',
     height: '100%',
-  },
-  content: {
-    backgroundColor: theme.palette.background.default,
-    height: 'calc(100% - 56px)',
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginTop: 56,
-    marginLeft: `${drawerWidth}px`,
-    padding: theme.spacing.unit * 3,
-    [theme.breakpoints.up('sm')]: {
-      height: 'calc(100% - 64px)',
-      marginTop: 64,
-    },
-  },
+  }
 });
 
 const propTypes = {
@@ -47,9 +36,7 @@ class App extends Component {
                 <div className={classes.appFrame}>
                     <AppBar />
                     <Drawer />
-                    <main className={classes.content}>
-                      <Notes />
-                    </main>
+                    <Main />
                 </div>
             </div>
         )

@@ -1,6 +1,6 @@
-import { ADD_NOTE, DELETE_NOTE } from '../actionsTypes/notesActionsTypes';
+import { ADD_NOTE, DELETE_NOTE } from '../actionsTypes/noteActionTypes';
 
-export function notes(state = [], action) {
+const notes = (state = [], action) => {
   switch (action.type) {
     case ADD_NOTE:
       return [
@@ -18,5 +18,20 @@ export function notes(state = [], action) {
       ]
     default:
       return state
+  }
+}
+
+export default notes;
+
+export const getVisibleNotes = (state, filter) => {
+  switch (filter) {
+    case 'all': 
+      return state;
+    case 'archived':
+      return state.filter(n => n.archived);
+    case 'active':
+      return state.filter(n => !n.archived);
+    default:
+      throw new Error(`Unknown filter: ${filter}`);
   }
 }

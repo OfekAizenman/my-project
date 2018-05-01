@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { getAllNotes } from '../../../managers/notesManager';
+import { getAllNotes } from '../../../api/notesApi';
 import { fromJS, List } from 'immutable'; 
 import NotesGrid from './NotesGrid';
 

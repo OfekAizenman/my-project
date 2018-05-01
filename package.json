@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack",
     "flow": "flow",
-    "start": "webpack-dev-server --inline",
+    "dev": "webpack-dev-server --inline --history-api-fallback",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -24,7 +24,6 @@
     "extract-text-webpack-plugin": "2.1.2",
     "flow-bin": "0.50.0",
     "node-sass": "4.5.3",
-    "redux-devtools": "3.4.1",
     "sass-loader": "6.0.5",
     "style-loader": "0.18.2",
     "webpack": "2.6.1",
@@ -33,6 +32,7 @@
   "dependencies": {
     "axios": "0.18.0",
     "immutable": "3.8.2",
+    "lodash": "4.17.10",
     "material-ui": "^1.0.0-beta.41",
     "material-ui-icons": "^1.0.0-beta.17",
     "prop-types": "15.6.0",
@@ -41,8 +41,10 @@
     "react-dom": "16.0.0",
     "react-immutable-proptypes": "2.1.0",
     "react-motion": "0.5.0",
-    "react-redux": "5.0.7",
+    "react-redux": "^5.0.7",
     "react-router-dom": "4.2.2",
-    "redux": "3.7.2"
+    "redux": "3.7.2",
+    "redux-logger": "3.0.6",
+    "redux-thunk": "2.2.0"
   }
 }
