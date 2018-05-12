@@ -2,29 +2,33 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
-import { BrowserRouter } from 'react-router-dom';
-import App from './app/App.jsx';
+import { ConnectedRouter } from 'react-router-redux';
+import { withRouter } from 'react-router-dom';
+import { PersistGate } from 'redux-persist/integration/react';
+import App from './app/App';
 import configureStore from './redux/store/configureStore';
-import styles from './globals/globals.scss';
 
+const PersistGateWithRouter = withRouter(PersistGate);
 const theme = createMuiTheme();
-const store = configureStore();
+const { store, persistor, history } = configureStore();
 
 function AppComponent() {
-    return ( 
-        <BrowserRouter>
-            <MuiThemeProvider theme={theme}>
-                <Provider store={store}>
-                    <App />
-                </Provider>
-            </MuiThemeProvider>
-        </BrowserRouter>
-    )
+  return (
+    <MuiThemeProvider theme={theme}>
+      <Provider store={store}>
+        <ConnectedRouter history={history}>
+          <PersistGateWithRouter loading={null} persistor={persistor}>
+            <App />
+          </PersistGateWithRouter>
+        </ConnectedRouter>
+      </Provider>
+    </MuiThemeProvider>
+  );
 }
 
 ReactDOM.render(
-    <AppComponent /> ,
-    document.getElementById("app")
+  <AppComponent />,
+  document.getElementById('app'),
 );
 
 module.hot.accept();

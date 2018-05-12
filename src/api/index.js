@@ -1,1 +1,1 @@
-export { default as notesApi } from './notesApi';
+export { default } from './notesApi';

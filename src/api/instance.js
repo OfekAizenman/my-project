@@ -1,4 +1,10 @@
-export default function handleError(error) {
+import axios from 'axios';
+
+const config = {
+  baseURL: 'http://localhost:8000/api',
+};
+
+export function handleError(error) {
   if (error.response) {
     // The request was made and the server responded with a status code
     // that falls out of the range of 2xx
@@ -16,3 +22,6 @@ export default function handleError(error) {
   }
   console.log(error.config);
 }
+
+export default axios.create(config);
+

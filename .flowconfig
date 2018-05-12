@@ -1,5 +1,0 @@
-[ignore]
-/node_modules/
-
-[options]
-module.name_mapper.extension='scss' -> '<PROJECT_ROOT>/flow/SCSSModule.js.flow'
