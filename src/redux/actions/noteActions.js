@@ -2,13 +2,10 @@ import { normalize } from 'normalizr';
 import * as schema from './schema';
 import * as actionTypes from '../actionsTypes';
 import handleError from './handlers';
-import * as notesApi from '../../api/notesApi';
 import { getIsFetching } from '../reducers';
+import * as Api from '../../api';
 
-const axiosRequest = config => ({
-  type: actionTypes.AXIOS_REQUEST,
-  config,
-});
+const ROUTE = Api.NOTES_ROUTE;
 
 export const fetchNotes = filter => (dispatch, getState) => {
   if (getIsFetching(getState(), filter)) {
@@ -20,11 +17,7 @@ export const fetchNotes = filter => (dispatch, getState) => {
     filter,
   });
 
-  // return notesApi.getAllNotes(filter).then(
-  return dispatch(axiosRequest({
-    method: 'get',
-    url: '/notes',
-  })).then(
+  return dispatch(Api.getAll(ROUTE)).then(
     (response) => {
       dispatch({
         type: actionTypes.FETCH_NOTES_SUCCESS,
@@ -45,13 +38,9 @@ export const fetchNotes = filter => (dispatch, getState) => {
 };
 
 export const addNote = (title, description) => (dispatch) => {
-  return dispatch(axiosRequest({
-    method: 'post',
-    url: '/notes',
-    data: {
-      title,
-      description,
-    },
+  return dispatch(Api.post(ROUTE, {
+    title,
+    description,
   })).then((response) => {
     dispatch({
       type: actionTypes.ADD_NOTE_SUCCESS,
@@ -61,13 +50,11 @@ export const addNote = (title, description) => (dispatch) => {
 };
 
 export const deleteNote = id => (dispatch) => {
-  return dispatch(axiosRequest({
-    method: 'delete',
-    url: `/notes/${id}`,
-  })).then(() => {
-    dispatch({
-      type: actionTypes.DELETE_NOTE_SUCCESS,
-      response: normalize({ id }, schema.note),
+  return dispatch(Api.del(`${ROUTE}/${id}`))
+    .then(() => {
+      dispatch({
+        type: actionTypes.DELETE_NOTE_SUCCESS,
+        response: normalize({ id }, schema.note),
+      });
     });
-  });
 };

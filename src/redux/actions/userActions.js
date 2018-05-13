@@ -2,12 +2,10 @@ import { normalize } from 'normalizr';
 import { push } from 'react-router-redux';
 import * as schema from './schema';
 import * as actionTypes from '../actionsTypes';
-import * as usersApi from '../../api/usersApi';
+import * as Api from '../../api';
 
-const axiosRequest = config => ({
-  type: actionTypes.AXIOS_REQUEST,
-  config,
-});
+const ROUTE = Api.USER_ROUTE;
+const LOGIN = `${ROUTE}/login`;
 
 export const login = formValues => (dispatch) => {
   dispatch({
@@ -15,11 +13,7 @@ export const login = formValues => (dispatch) => {
     formValues,
   });
 
-  return dispatch(axiosRequest({
-    method: 'post',
-    url: '/users/login',
-    data: formValues,
-  })).then(
+  return dispatch(Api.post(LOGIN, formValues)).then(
     (response) => {
       dispatch({
         type: actionTypes.LOGIN_SUCCESS,
@@ -45,13 +39,8 @@ export const signup = formValues => (dispatch) => {
     formValues,
   });
 
-  return dispatch(axiosRequest({
-    method: 'post',
-    url: '/users',
-    data: formValues,
-  })).then(
+  return dispatch(Api.post(ROUTE, formValues)).then(
     (response) => {
-      debugger
       dispatch({
         type: actionTypes.SIGNUP_SUCCESS,
         response: normalize(response.data, schema.user),

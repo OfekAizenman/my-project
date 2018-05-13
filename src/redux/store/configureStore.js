@@ -7,7 +7,7 @@ import thunk from 'redux-thunk';
 import { routerMiddleware } from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
 import axiosRequest from '../middleware/axiosMiddleware';
-import axiosInstance from '../../api/instance';
+import configureApi from '../../api';
 import appReducer from '../reducers';
 
 const persistConfig = {
@@ -19,7 +19,7 @@ const persistConfig = {
 const configureStore = (history) => {
   const historyMiddleware = routerMiddleware(history);
 
-  const middleware = [thunk, axiosRequest(axiosInstance), historyMiddleware];
+  const middleware = [thunk, axiosRequest(configureApi()), historyMiddleware];
 
   if (process.env.NODE_ENV !== 'production') {
     middleware.push(createLogger());
