@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import Button from 'material-ui/Button';
-import TextField from 'material-ui/TextField';
-import { withStyles } from 'material-ui/styles';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import { withStyles } from '@material-ui/core/styles';
 
 const styles = () => ({
   root: {

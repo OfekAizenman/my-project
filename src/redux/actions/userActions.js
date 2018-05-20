@@ -1,37 +1,9 @@
-import { normalize } from 'normalizr';
 import { push } from 'react-router-redux';
-import * as schema from './schema';
 import * as actionTypes from '../actionsTypes';
 import * as Api from '../../api';
 
 const ROUTE = Api.USER_ROUTE;
-const LOGIN = `${ROUTE}/login`;
-
-export const login = formValues => (dispatch) => {
-  dispatch({
-    type: actionTypes.LOGIN_REQUEST,
-    formValues,
-  });
-
-  return dispatch(Api.post(LOGIN, formValues)).then(
-    (response) => {
-      dispatch({
-        type: actionTypes.LOGIN_SUCCESS,
-        response: {
-          user: response.data.user,
-          token: response.data.token,
-        },
-      });
-      dispatch(push('/'));
-    },
-    (error) => {
-      dispatch({
-        type: actionTypes.LOGIN_FAILURE,
-        message: error.message || 'Something went wrong.',
-      });
-    },
-  );
-};
+const SIGNIN = `${ROUTE}/signin`;
 
 export const signup = formValues => (dispatch) => {
   dispatch({
@@ -43,8 +15,12 @@ export const signup = formValues => (dispatch) => {
     (response) => {
       dispatch({
         type: actionTypes.SIGNUP_SUCCESS,
-        response: normalize(response.data, schema.user),
+        response: {
+          user: response.data.user,
+          token: response.data.token,
+        },
       });
+      dispatch(push('/'));
     },
     (error) => {
       dispatch({
@@ -53,4 +29,45 @@ export const signup = formValues => (dispatch) => {
       });
     },
   );
+};
+
+export const signin = formValues => (dispatch) => {
+  dispatch({
+    type: actionTypes.SIGNIN_REQUEST,
+    formValues,
+  });
+
+  return dispatch(Api.post(SIGNIN, formValues)).then(
+    (response) => {
+      dispatch({
+        type: actionTypes.SIGNIN_SUCCESS,
+        response: {
+          user: response.data.user,
+          token: response.data.token,
+        },
+      });
+      dispatch(push('/'));
+    },
+    (error) => {
+      dispatch({
+        type: actionTypes.SIGNIN_FAILURE,
+        message: error.message || 'Something went wrong.',
+      });
+    },
+  );
+};
+
+export const logout = () => (dispatch) => {
+  dispatch({
+    type: actionTypes.LOGOUT,
+  });
+  dispatch(push('/'));
+};
+
+export const gotoSignin = () => (dispatch) => {
+  dispatch(push('/signin'));
+};
+
+export const gotoSignup = () => (dispatch) => {
+  dispatch(push('/signup'));
 };

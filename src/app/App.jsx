@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import AppBar from './appBar';
 import Drawer from './drawer';
+import Snackbar from './snackbar';
 import Main from './main';
 import getRoutes from '../common/routes';
 import { getIsAuthenticated } from '../redux/reducers';
 
-const styles = () => ({
+const styles = theme => ({
   '@global *': {
     margin: 0,
     padding: 0,
@@ -18,6 +19,9 @@ const styles = () => ({
   '@global html, body, #app': {
     height: '100%',
     overflowY: 'auto',
+  },
+  '@global body': {
+    backgroundColor: theme.palette.background.default,
   },
   appFrame: {
     display: 'flex',
@@ -31,20 +35,18 @@ const styles = () => ({
   },
 });
 
-const propTypes = {
-  classes: PropTypes.shape({}).isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
-};
-
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       drawerOpen: true,
+      snackbarOpen: false,
     };
 
     this.handleDrawerToggleOpen = this.handleDrawerToggleOpen.bind(this);
+    this.handleSnackbarClose = this.handleSnackbarClose.bind(this);
+    this.handleSnackbarOpen = this.handleSnackbarOpen.bind(this);
   }
 
   handleDrawerToggleOpen() {
@@ -53,9 +55,17 @@ class App extends Component {
     }));
   }
 
+  handleSnackbarClose() {
+    this.setState({ snackbarOpen: false });
+  }
+
+  handleSnackbarOpen() {
+    this.setState({ snackbarOpen: true });
+  }
+
   render() {
     const { classes, isAuthenticated } = this.props;
-    const { drawerOpen } = this.state;
+    const { drawerOpen, snackbarOpen } = this.state;
 
     const routes = getRoutes(isAuthenticated);
 
@@ -63,6 +73,7 @@ class App extends Component {
       <div className={classes.appFrame}>
         <AppBar onDrawerToggleOpen={this.handleDrawerToggleOpen} />
         <Drawer drawerOpen={drawerOpen} routes={routes.filter(route => route.displayByDrawer)} />
+        <Snackbar open={snackbarOpen} handleClose={this.handleSnackbarClose} />
         <Main drawerOpen={drawerOpen} routes={routes} />
       </div>
     );
@@ -79,7 +90,10 @@ class App extends Component {
   }
 }
 
-App.propTypes = propTypes;
+App.propTypes = {
+  classes: PropTypes.shape({}).isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
+};
 
 const mapStateToProps = state => ({
   isAuthenticated: getIsAuthenticated(state),

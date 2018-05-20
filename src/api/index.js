@@ -3,6 +3,7 @@ import { AXIOS_REQUEST } from '../redux/actionsTypes';
 
 export const NOTES_ROUTE = '/notes';
 export const USER_ROUTE = '/users';
+export const CODES_ROUTE = '/codes';
 
 export const baseConfig = {
   baseURL: 'http://localhost:8000/api',
@@ -13,10 +14,11 @@ export const getRequestAction = config => ({
   config,
 });
 
-export const getAll = (url = '', config = {}) => (
+export const getAll = (url = '', config = {}, cacheKey = '') => (
   getRequestAction(Object.assign({}, config, {
     method: 'get',
     url,
+    cacheKey,
   }))
 );
 

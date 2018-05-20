@@ -30,7 +30,7 @@ export const fetchNotes = filter => (dispatch, getState) => {
         error,
         dispatch,
         actionTypes.FETCH_NOTES_FAILURE,
-        error.message || 'Something went wrong.',
+        error.message,
         { filter },
       );
     },
@@ -58,3 +58,4 @@ export const deleteNote = id => (dispatch) => {
       });
     });
 };
+

@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import { drawerWidth } from '../../common/constants';
 
 const styles = theme => ({
   content: {
     flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
     height: 'calc(100% - 56px)',
     width: '100%',
     marginTop: 56,

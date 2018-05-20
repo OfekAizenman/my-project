@@ -1,14 +1,7 @@
 import React from 'react';
-import AssignmentIcon from 'material-ui-icons/Assignment';
-import AccessAlarmIcon from 'material-ui-icons/AccessAlarm';
-import { Notes, Reminders, Login, Signup } from '../app/pages';
-
-const unUsed = {
-  id: 1,
-  path: '/',
-  exact: true,
-  component: Notes,
-};
+import AssignmentIcon from '@material-ui/icons/Assignment';
+import AccessAlarmIcon from '@material-ui/icons/AccessAlarm';
+import { Notes, Reminders, Signin, Signup } from '../app/pages';
 
 const connectedRoutes = [{
   id: 1,
@@ -38,12 +31,17 @@ const notConnectedRouts = [{
   id: 1,
   path: '/',
   exact: true,
-  component: Login,
+  component: Signin,
 }, {
   id: 2,
-  path: '/login',
+  path: '/signin',
   exact: true,
-  component: Login,
+  component: Signin,
+}, {
+  id: 3,
+  path: '/signup',
+  exact: true,
+  component: Signup,
 }];
 
 export default (isUserConnected) => {

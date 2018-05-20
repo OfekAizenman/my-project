@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import NotesGridContainer from './notesGrid';
 import AddNoteContainer from '../../../common/components/addNote';
 
@@ -8,15 +8,15 @@ const propTypes = {
   classes: PropTypes.shape({}).isRequired,
 };
 
-const styles = theme => ({
+const styles = () => ({
   root: {
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   addNote: {
-      margin: '12px 0 32px 0',
-      maxWidth: 500
-  }
+    margin: '12px 0 32px 0',
+    maxWidth: 500,
+  },
 });
 
 class Notes extends Component {

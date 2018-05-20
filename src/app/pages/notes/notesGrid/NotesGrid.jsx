@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-import Grid from 'material-ui/Grid';
-import { withStyles } from 'material-ui/styles';
+import Grid from '@material-ui/core/Grid';
+import { withStyles } from '@material-ui/core/styles';
 import NoteContainer from './NoteContainer';
 
 const styles = () => ({
@@ -23,7 +23,7 @@ class NotesGrid extends PureComponent {
     return (
       <Grid className={classes.grid} container spacing={16}>
         {notes.map(note => (
-          <Grid key={note.get('id')} item xs={3}>
+          <Grid key={note.get('id')} item xs={12} sm={6} md={3}>
             <NoteContainer
               description={note.get('description')}
               id={note.get('id')}

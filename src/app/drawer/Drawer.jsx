@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import MuiDrawer from 'material-ui/Drawer';
-import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
-import { withStyles } from 'material-ui/styles';
+import MuiDrawer from '@material-ui/core/Drawer';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import { withStyles } from '@material-ui/core/styles';
 import { drawerWidth } from '../../common/constants';
 
 const styles = theme => ({
   root: {
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: 'transparent',
     borderRight: 'none',
     position: 'relative',
     width: drawerWidth,
@@ -21,8 +23,8 @@ const styles = theme => ({
     textDecoration: 'none',
   },
   linkActive: {
-    borderRadius: '2px',
     '& $listItemRoot': {
+      borderRadius: '2px',
       backgroundColor: 'rgba(0, 0, 0, 0.07)',
     },
   },

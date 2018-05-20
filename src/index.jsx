@@ -1,28 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { ConnectedRouter } from 'react-router-redux';
-import { withRouter } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';
 import App from './app/App';
 import configureStore from './redux/store/configureStore';
 
-const PersistGateWithRouter = withRouter(PersistGate);
 const theme = createMuiTheme();
 const { store, persistor, history } = configureStore();
 
 function AppComponent() {
   return (
-    <MuiThemeProvider theme={theme}>
-      <Provider store={store}>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
         <ConnectedRouter history={history}>
-          <PersistGateWithRouter loading={null} persistor={persistor}>
+          <MuiThemeProvider theme={theme}>
             <App />
-          </PersistGateWithRouter>
+          </MuiThemeProvider>
         </ConnectedRouter>
-      </Provider>
-    </MuiThemeProvider>
+      </PersistGate>
+    </Provider>
   );
 }
 
@@ -31,4 +29,6 @@ ReactDOM.render(
   document.getElementById('app'),
 );
 
-module.hot.accept();
+if (module.hot) {
+  module.hot.accept();
+}

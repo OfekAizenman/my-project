@@ -1,18 +1,25 @@
 const path = require('path');
 const webpack = require('webpack');
-
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
 
   entry: {
-    app: ['./src/index.jsx', 'webpack/hot/only-dev-server'],
-    vendor: ['react', 'react-dom'],
+    app: './src/index.jsx',
   },
 
   output: {
     path: path.resolve(__dirname, 'dist'),
     publicPath: 'http://localhost:8080/dist/',
-    filename: 'bundle.js',
+    filename: '[name].bundle.js',
+  },
+
+  devtool: 'inline-source-map',
+
+  devServer: {
+    contentBase: path.resolve(__dirname, 'dist'),
+    hot: true,
+    historyApiFallback: true,
   },
 
   module: {
@@ -26,12 +33,9 @@ module.exports = {
   },
 
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      filename: 'vendor.bundle.js',
-      minChunks: Infinity,
-    }),
+    new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
+    new HtmlWebpackPlugin({ template: './src/index.html' }),
   ],
 
   resolve: {

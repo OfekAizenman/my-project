@@ -33,4 +33,6 @@ export const getErrorMessage = (state, filter) =>
 
 export const getUser = state => fromUser.getUser(state.user);
 export const getIsAuthenticated = state => fromUser.getIsAuthenticated(state.user);
-
+export const getEmail = state => fromUser.getEmail(state.user);
+export const getFullName = state => fromUser.getFullName(state.user);
+export const getInitials = state => fromUser.getInitials(state.user);
