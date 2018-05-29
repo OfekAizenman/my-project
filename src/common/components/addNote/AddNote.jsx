@@ -1,52 +1,39 @@
+// @flow
+
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
 
-const styles = () => ({
-  root: {
-    alignSelf: 'center',
-    background: 'rgba(255, 255, 255, 0.6)',
-    borderRadius: 2,
-    boxShadow: '0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.2), 0 1px 5px 0 rgba(0,0,0,0.12)',
-    boxSizing: 'border-box',
-    display: 'flex',
-    height: 50,
-    padding: '10px 12px',
-    flexDirection: 'column',
-    minWidth: 400,
-    transition: 'height .2s',
-  },
-  addButton: {
-    alignSelf: 'flex-end',
-  },
-  rootFocused: {
-    height: 120,
-  },
-  hidden: {
-    display: 'none',
-  },
-  descriptionInput: {
 
+type Props = {
+  classes: {
+    root: {},
+    rootFocused: {},
+    addButton: {},
+    hidden: {},
+    descriptionInput: {},
+    titleInput: {},
   },
-  titleInput: {
-
-  },
-});
-
-const propTypes = {
-  classes: PropTypes.shape({}).isRequired,
-  onAddNote: PropTypes.func.isRequired,
-  rootClassName: PropTypes.string,
+  onAddNote: Function,
+  rootClassName?: string,
 };
 
-const defaultProps = {
-  rootClassName: '',
+type State = {
+  description: ?string,
+  focus: boolean,
+  title: ?string,
 };
 
-class AddNote extends Component {
+class AddNote extends Component<Props, State> {
+  // eslint-disable-next-line react/sort-comp
+  rootRef: {current: null | HTMLDivElement} = React.createRef();
+
+  static defaultProps = {
+    rootClassName: '',
+  };
+
   constructor(props) {
     super(props);
 
@@ -56,31 +43,26 @@ class AddNote extends Component {
       title: '',
     };
 
-    this.handleClickOutside = this.handleClickOutside.bind(this);
-    this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
-    this.handleDone = this.handleDone.bind(this);
-    this.handleFocus = this.handleFocus.bind(this);
-    this.handleTitleChange = this.handleTitleChange.bind(this);
-    this.setWrapperRef = this.setWrapperRef.bind(this);
+    // Set the wrapper ref
+    // this.rootRef = React.createRef();
+
+    (this: any).handleClickOutside = this.handleClickOutside.bind(this);
+    (this: any).handleDescriptionChange = this.handleDescriptionChange.bind(this);
+    (this: any).handleDone = this.handleDone.bind(this);
+    (this: any).handleFocus = this.handleFocus.bind(this);
+    (this: any).handleTitleChange = this.handleTitleChange.bind(this);
   }
 
   componentDidMount() {
-    document.addEventListener('mousedown', this.handleClickOutside);
+    (document.addEventListener: Function)('mousedown', this.handleClickOutside);
   }
 
   componentWillUnmount() {
-    document.removeEventListener('mousedown', this.handleClickOutside);
-  }
-
-  /**
-   * Set the wrapper ref
-   */
-  setWrapperRef(node) {
-    this.rootRef = node;
+    (document.addEventListener: Function)('mousedown', this.handleClickOutside);
   }
 
   handleClickOutside(event) {
-    if (this.rootRef && !this.rootRef.contains(event.target)) {
+    if (this.rootRef.current && !this.rootRef.current.contains(event.target)) {
       this.handleDone();
     }
   }
@@ -116,28 +98,28 @@ class AddNote extends Component {
     const { description, focus, title } = this.state;
 
     const addButton = classNames(classes.addButton, {
+      // $FlowFixMe
       [classes.hidden]: !focus,
     });
 
     const titleClassName = classNames(classes.descriptionInput, {
+      // $FlowFixMe
       [classes.hidden]: !focus,
     });
 
     const rootClasses = classNames(classes.root, {
+      // $FlowFixMe
       [classes.rootFocused]: focus,
     }, rootClassName);
 
     return (
-      <div className={rootClasses} ref={this.setWrapperRef}>
+      <div className={rootClasses} ref={this.rootRef}>
         <TextField
           className={titleClassName}
           placeholder='Title'
           onChange={this.handleTitleChange}
           InputProps={{
             disableUnderline: true,
-            classes: {
-              input: classes.input,
-            },
           }}
           value={title}
         />
@@ -148,9 +130,6 @@ class AddNote extends Component {
           value={description}
           InputProps={{
             disableUnderline: true,
-            classes: {
-              input: classes.input,
-            },
           }}
         />
         <Button className={addButton} onClick={this.handleDone}>DONE</Button>
@@ -159,6 +138,35 @@ class AddNote extends Component {
   }
 }
 
-AddNote.propTypes = propTypes;
-AddNote.defaultProps = defaultProps;
+const styles = () => ({
+  root: {
+    alignSelf: 'center',
+    background: 'rgba(255, 255, 255, 0.6)',
+    borderRadius: 2,
+    boxShadow: '0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.2), 0 1px 5px 0 rgba(0,0,0,0.12)',
+    boxSizing: 'border-box',
+    display: 'flex',
+    height: 50,
+    padding: '10px 12px',
+    flexDirection: 'column',
+    minWidth: 400,
+    transition: 'height .2s',
+  },
+  addButton: {
+    alignSelf: 'flex-end',
+  },
+  rootFocused: {
+    height: 120,
+  },
+  hidden: {
+    display: 'none',
+  },
+  descriptionInput: {
+
+  },
+  titleInput: {
+
+  },
+});
+
 export default withStyles(styles)(AddNote);

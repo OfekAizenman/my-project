@@ -1,22 +1,25 @@
+// @flow
+
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import ImmutablePropTypes from 'react-immutable-proptypes';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
+import { List, Record } from 'immutable';
 import NoteContainer from './NoteContainer';
 
-const styles = () => ({
-  grid: {
-    padding: '0 20px',
-  },
-});
-
-const propTypes = {
-  classes: PropTypes.shape({}).isRequired,
-  notes: ImmutablePropTypes.list.isRequired,
+type exampleNote = {
+  description: ?string,
+  id: string,
+  title: ?string,
 };
 
-class NotesGrid extends PureComponent {
+type Props = {
+  classes: {
+    grid: {},
+  },
+  notes: List<Record<exampleNote>>,
+};
+
+class NotesGrid extends PureComponent<Props> {
   render() {
     const { classes, notes } = this.props;
 
@@ -36,5 +39,10 @@ class NotesGrid extends PureComponent {
   }
 }
 
-NotesGrid.propTypes = propTypes;
+const styles = () => ({
+  grid: {
+    padding: '0 20px',
+  },
+});
+
 export default withStyles(styles)(NotesGrid);

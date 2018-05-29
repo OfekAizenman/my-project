@@ -8,7 +8,6 @@ const COLORS_ROUTE = `${ROUTE}/colors`;
 export const fetchAllColors = () => (dispatch) => {
   dispatch(Api.getAll(COLORS_ROUTE, {}, 'colors')).then(
     (response) => {
-      debugger
       if (Array.isArray(response) && response[0] === 'cached') {
         return response[1];
       }

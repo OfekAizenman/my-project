@@ -1,6 +1,7 @@
+// @flow
+
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
-import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -10,40 +11,13 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import renderTextField from '../../../common/components/form/TextField';
 
-const styles = theme => ({
-  root: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '100%',
-  },
-  card: {
-    maxWidth: 550,
-    padding: theme.spacing.unit * 3,
-  },
-  button: {
-    margin: theme.spacing.unit,
-  },
-  signup: {
-    color: '#4285f4',
-    textTransform: 'none',
-    '&:hover': {
-      backgroundColor: 'transparent',
-    },
-  },
-  cardActions: {
-    justifyContent: 'space-between',
-    marginTop: 24,
-  },
-  headline: {
-    marginBottom: 24,
-  },
-  inputProps: {
-    width: '100%',
-  },
-});
 
-const formFields = [{
+type FormField = {
+  name: string,
+  label: string,
+}
+
+const formFields: Array<FormField> = [{
   name: 'first',
   label: 'First name',
 }, {
@@ -83,8 +57,25 @@ const validate = (values) => {
   return errors;
 };
 
+type Props = {
+  classes: {
+    root: {},
+    card: {},
+    button: {},
+    signup: {},
+    cardActions: {},
+    headline: {},
+    inputProps: {},
+  },
+  onGoToInstead: Function,
+  onSubmit: Function,
+  handleSubmit: Function, // redux-form
+  submitting: boolean, // redux-form
+  valid: boolean, // redux-form
+};
+
 // eslint-disable-next-line react/prefer-stateless-function
-class Signup extends Component {
+class Signup extends Component<Props> {
   render() {
     const {
       classes,
@@ -177,14 +168,38 @@ class Signup extends Component {
   }
 }
 
-Signup.propTypes = {
-  classes: PropTypes.shape({}).isRequired,
-  onGoToInstead: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired,
-  handleSubmit: PropTypes.func.isRequired, // redux-form
-  submitting: PropTypes.bool.isRequired, // redux-form
-  valid: PropTypes.bool.isRequired, // redux-form
-};
+const styles = theme => ({
+  root: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100%',
+  },
+  card: {
+    maxWidth: 550,
+    padding: theme.spacing.unit * 3,
+  },
+  button: {
+    margin: theme.spacing.unit,
+  },
+  signup: {
+    color: '#4285f4',
+    textTransform: 'none',
+    '&:hover': {
+      backgroundColor: 'transparent',
+    },
+  },
+  cardActions: {
+    justifyContent: 'space-between',
+    marginTop: 24,
+  },
+  headline: {
+    marginBottom: 24,
+  },
+  inputProps: {
+    width: '100%',
+  },
+});
 
 const SignupWithStyles = withStyles(styles)(Signup);
 

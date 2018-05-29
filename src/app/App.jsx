@@ -1,6 +1,7 @@
+// @flow
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from './appBar';
@@ -10,32 +11,21 @@ import Main from './main';
 import getRoutes from '../common/routes';
 import { getIsAuthenticated } from '../redux/reducers';
 
-const styles = theme => ({
-  '@global *': {
-    margin: 0,
-    padding: 0,
-    boxSizing: 'border-box',
-  },
-  '@global html, body, #app': {
-    height: '100%',
-    overflowY: 'auto',
-  },
-  '@global body': {
-    backgroundColor: theme.palette.background.default,
-  },
-  appFrame: {
-    display: 'flex',
-    position: 'relative',
-    width: '100%',
-    height: '100%',
-    zIndex: 1,
-  },
-  mainUnConnected: {
-    margin: 0,
-  },
-});
 
-class App extends Component {
+type Props = {
+  classes: {
+    appFrame: {},
+    mainUnConnected: {},
+  },
+  isAuthenticated: boolean,
+};
+
+type State = {
+  drawerOpen: boolean,
+  snackbarOpen: boolean,
+};
+
+class App extends Component<Props, State> {
   constructor(props) {
     super(props);
 
@@ -44,22 +34,22 @@ class App extends Component {
       snackbarOpen: false,
     };
 
-    this.handleDrawerToggleOpen = this.handleDrawerToggleOpen.bind(this);
-    this.handleSnackbarClose = this.handleSnackbarClose.bind(this);
-    this.handleSnackbarOpen = this.handleSnackbarOpen.bind(this);
+    (this: any).handleDrawerToggleOpen = this.handleDrawerToggleOpen.bind(this);
+    (this: any).handleSnackbarClose = this.handleSnackbarClose.bind(this);
+    (this: any).handleSnackbarOpen = this.handleSnackbarOpen.bind(this);
   }
 
-  handleDrawerToggleOpen() {
+  handleDrawerToggleOpen(): void {
     this.setState(prevState => ({
       drawerOpen: !prevState.drawerOpen,
     }));
   }
 
-  handleSnackbarClose() {
+  handleSnackbarClose(): void {
     this.setState({ snackbarOpen: false });
   }
 
-  handleSnackbarOpen() {
+  handleSnackbarOpen(): void {
     this.setState({ snackbarOpen: true });
   }
 
@@ -90,10 +80,30 @@ class App extends Component {
   }
 }
 
-App.propTypes = {
-  classes: PropTypes.shape({}).isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
-};
+const styles = theme => ({
+  '@global *': {
+    margin: 0,
+    padding: 0,
+    boxSizing: 'border-box',
+  },
+  '@global html, body, #app': {
+    height: '100%',
+    overflowY: 'auto',
+  },
+  '@global body': {
+    backgroundColor: theme.palette.background.default,
+  },
+  appFrame: {
+    display: 'flex',
+    position: 'relative',
+    width: '100%',
+    height: '100%',
+    zIndex: 1,
+  },
+  mainUnConnected: {
+    margin: 0,
+  },
+});
 
 const mapStateToProps = state => ({
   isAuthenticated: getIsAuthenticated(state),
@@ -102,4 +112,3 @@ const mapStateToProps = state => ({
 const appWithStyle = withStyles(styles)(App);
 const connectedApp = connect(mapStateToProps)(appWithStyle);
 export default withRouter(connectedApp);
-

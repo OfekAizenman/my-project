@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -24,11 +26,16 @@ function AppComponent() {
   );
 }
 
-ReactDOM.render(
-  <AppComponent />,
-  document.getElementById('app'),
-);
+const container = document.getElementById('app');
 
+if (container !== null) {
+  ReactDOM.render(
+    <AppComponent />,
+    container,
+  );
+}
+
+// $FlowFixMe
 if (module.hot) {
   module.hot.accept();
 }

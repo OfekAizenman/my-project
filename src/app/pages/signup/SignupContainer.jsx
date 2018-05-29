@@ -1,13 +1,20 @@
+// @flow
+
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { signup, gotoSignin } from '../../../redux/actions/userActions';
 import Signup from './Signup';
 
-class SignupContainer extends Component {
+type Props = {
+  signup: Function,
+  gotoSignin: Function,
+}
+
+class SignupContainer extends Component<Props> {
   constructor(props) {
     super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
+
+    (this: any).handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleSubmit(values) {
@@ -24,11 +31,6 @@ class SignupContainer extends Component {
     );
   }
 }
-
-SignupContainer.propTypes = {
-  signup: PropTypes.func.isRequired,
-  gotoSignin: PropTypes.func.isRequired,
-};
 
 const connectedSignupContainer = connect(
   null,

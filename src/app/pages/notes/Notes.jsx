@@ -1,12 +1,31 @@
+// @flow
+
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import NotesGridContainer from './notesGrid';
 import AddNoteContainer from '../../../common/components/addNote';
 
-const propTypes = {
-  classes: PropTypes.shape({}).isRequired,
+
+type Props = {
+  classes: {
+    root: {},
+    addNote: {},
+  },
 };
+
+// eslint-disable-next-line react/prefer-stateless-function
+class Notes extends Component<Props> {
+  render() {
+    const { classes } = this.props;
+
+    return (
+      <div className={classes.root}>
+        <AddNoteContainer rootClassName={classes.addNote} />
+        <NotesGridContainer />
+      </div>
+    )
+  }
+}
 
 const styles = () => ({
   root: {
@@ -19,19 +38,5 @@ const styles = () => ({
   },
 });
 
-class Notes extends Component {
-    render() {
-        const { classes } = this.props;
-
-        return (
-            <div className={classes.root}>
-                <AddNoteContainer rootClassName={classes.addNote} />
-                <NotesGridContainer />
-            </div>
-        )
-    }
-}
-
-Notes.propTypes = propTypes;
 export default withStyles(styles)(Notes);
 

@@ -1,46 +1,31 @@
+// @flow
+
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import MuiDrawer from '@material-ui/core/Drawer';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { withStyles } from '@material-ui/core/styles';
 import { drawerWidth } from '../../common/constants';
+import { type RouteType } from '../../common/routes';
 
-const styles = theme => ({
-  root: {
-    backgroundColor: 'transparent',
-    borderRight: 'none',
-    position: 'relative',
-    width: drawerWidth,
-  },
-  toolbar: theme.mixins.toolbar,
-  routesFrame: {
-    padding: '16px 8px',
-  },
-  link: {
-    textDecoration: 'none',
-  },
-  linkActive: {
-    '& $listItemRoot': {
-      borderRadius: '2px',
-      backgroundColor: 'rgba(0, 0, 0, 0.07)',
-    },
-  },
-  listItemRoot: {
-    paddingLeft: 16,
-  },
-});
 
-const propTypes = {
-  classes: PropTypes.shape({}).isRequired,
-  drawerOpen: PropTypes.bool.isRequired,
-  routes: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+type Props = {
+  classes: {
+    root: {},
+    toolbar: {},
+    routesFrame: {},
+    link: {},
+    linkActive: {},
+    listItemRoot: {},
+  },
+  drawerOpen: boolean,
+  routes: Array<RouteType>,
 };
 
 // eslint-disable-next-line react/prefer-stateless-function
-class Drawer extends Component {
+class Drawer extends Component<Props> {
   render() {
     const { classes, drawerOpen, routes } = this.props;
 
@@ -72,5 +57,29 @@ class Drawer extends Component {
   }
 }
 
-Drawer.propTypes = propTypes;
+const styles = theme => ({
+  root: {
+    backgroundColor: 'transparent',
+    borderRight: 'none',
+    position: 'relative',
+    width: drawerWidth,
+  },
+  toolbar: theme.mixins.toolbar,
+  routesFrame: {
+    padding: '16px 8px',
+  },
+  link: {
+    textDecoration: 'none',
+  },
+  linkActive: {
+    '& $listItemRoot': {
+      borderRadius: '2px',
+      backgroundColor: 'rgba(0, 0, 0, 0.07)',
+    },
+  },
+  listItemRoot: {
+    paddingLeft: 16,
+  },
+});
+
 export default withStyles(styles)(Drawer);

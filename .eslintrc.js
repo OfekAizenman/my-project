@@ -1,8 +1,13 @@
 module.exports = {
-  "extends": "airbnb",
+  "extends": [
+    "airbnb",
+    "plugin:flowtype/recommended"
+  ],
+
   "env": {
     "browser": true
   },
+
   rules: {
     "linebreak-style": [
       "error",
@@ -11,6 +16,14 @@ module.exports = {
     "jsx-quotes": [
       "error",
       "prefer-single"
-    ]
-  }
+    ],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+  },
+
+  "parser": "babel-eslint",
+
+  "plugins": [
+    "jsx-a11y",
+    "flowtype",
+  ]
 };

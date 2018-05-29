@@ -1,3 +1,5 @@
+// @flow
+
 import axios from 'axios';
 import { AXIOS_REQUEST } from '../redux/actionsTypes';
 
@@ -9,12 +11,12 @@ export const baseConfig = {
   baseURL: 'http://localhost:8000/api',
 };
 
-export const getRequestAction = config => ({
+export const getRequestAction = (config: {}) => ({
   type: AXIOS_REQUEST,
   config,
 });
 
-export const getAll = (url = '', config = {}, cacheKey = '') => (
+export const getAll = (url: string = '', config: {} = {}, cacheKey: string = '') => (
   getRequestAction(Object.assign({}, config, {
     method: 'get',
     url,
@@ -22,14 +24,14 @@ export const getAll = (url = '', config = {}, cacheKey = '') => (
   }))
 );
 
-export const get = (url = '', config = {}) => (
+export const get = (url: string = '', config: {} = {}) => (
   getRequestAction(Object.assign({}, config, {
     method: 'get',
     url,
   }))
 );
 
-export const post = (url = '', data = {}, config = {}) => (
+export const post = (url: string = '', data: {} = {}, config: {} = {}) => (
   getRequestAction(Object.assign({}, config, {
     method: 'post',
     url,
@@ -37,7 +39,7 @@ export const post = (url = '', data = {}, config = {}) => (
   }))
 );
 
-export const put = (url = '', data = {}, config = {}) => (
+export const put = (url: string = '', data: {} = {}, config: {} = {}) => (
   getRequestAction(Object.assign({}, config, {
     method: 'put',
     url,
@@ -45,14 +47,14 @@ export const put = (url = '', data = {}, config = {}) => (
   }))
 );
 
-export const del = (url = '', config = {}) => (
+export const del = (url: string = '', config: {} = {}) => (
   getRequestAction(Object.assign({}, config, {
     method: 'delete',
     url,
   }))
 );
 
-const configureApi = (config = {}) => {
+const configureApi = (config: {} = {}) => {
   const configFinal = Object.assign({}, baseConfig, config);
   const instance = axios.create(configFinal);
   return instance;

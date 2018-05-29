@@ -1,18 +1,19 @@
+// @flow
+
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addNote } from '../../../redux/actions/noteActions';
 import AddNote from './AddNote';
 
-const propTypes = {
-  addNote: PropTypes.func.isRequired,
+type Props = {
+  addNote: Function,
 };
 
-class AddNoteContainer extends Component {
+class AddNoteContainer extends Component<Props> {
   constructor(props) {
     super(props);
 
-    this.handleAddNote = this.handleAddNote.bind(this);
+    (this: any).handleAddNote = this.handleAddNote.bind(this);
   }
 
   handleAddNote(description, title) {
@@ -29,8 +30,6 @@ class AddNoteContainer extends Component {
     );
   }
 }
-
-AddNoteContainer.propTypes = propTypes;
 
 const connectedAddNoteContainer = connect(
   null,

@@ -1,18 +1,18 @@
+// @flow
+
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { connect } from 'react-redux';
-import { fromJS, List } from 'immutable';
+import { fromJS } from 'immutable';
 import { fetchNotes } from '../../../../redux/actions/noteActions';
 import { getVisibleNotes } from '../../../../redux/reducers';
 import NotesGrid from './NotesGrid';
 
-const propTypes = {
-  filter: PropTypes.string.isRequired,
-  fetchNotes: PropTypes.func.isRequired,
+type Props = {
+  filter: string,
+  fetchNotes: Function,
 }
 
-class NotesContainer extends Component {
+class NotesContainer extends Component<Props> {
   componentDidMount() {
     this.fetchData();
   }
@@ -36,8 +36,6 @@ const mapStateToProps = (state) => {
     filter,
   };
 };
-
-NotesContainer.propTypes = propTypes;
 
 const connectedNotesContainer = connect(
   mapStateToProps,

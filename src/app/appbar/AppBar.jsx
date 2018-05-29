@@ -1,6 +1,7 @@
+// @flow
+
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
 import MuiAppBar from '@material-ui/core/AppBar';
@@ -15,43 +16,26 @@ import ExtendedAvatar from '../../common/components/extendedAvatar';
 import { getEmail, getFullName, getInitials } from '../../redux/reducers';
 import { logout } from '../../redux/actions/userActions';
 
-const styles = theme => ({
-  appBar: {
-    position: 'absolute',
-    zIndex: theme.zIndex.drawer + 1,
-  },
-  menuButton: {
-    marginLeft: 12,
-    marginRight: 20,
-  },
-  header: {
-    flex: '1 0 auto',
-  },
-  avatar: {
-    margin: '10px 16px 10px 10px',
-    color: '#fff',
-    backgroundColor: deepOrange[500],
-  },
-  popover_detailsSection: {
-    display: 'flex',
-  },
-  popover_bigAvatar: {
-    height: 80,
-    width: 80,
-    margin: 14,
-    fontSize: '2rem',
-  },
-  popover_nameAndEmail: {
-    marginTop: 14,
-  },
-  popover_actionsSection: {
-    display: 'flex',
-    justifyContent: 'center',
-    padding: '8px 0',
-  },
-});
 
-class AppBar extends PureComponent {
+type Props = {
+  classes: {
+    menuButton: {},
+    avatar: {},
+    appBar: {},
+    header: {},
+    popover_detailsSection: {},
+    popover_bigAvatar: {},
+    popover_nameAndEmail: {},
+    popover_actionsSection: {},
+  },
+  email: string,
+  fullName: string,
+  initials: string,
+  onDrawerToggleOpen: Function,
+  logout: Function, // redux
+};
+
+class AppBar extends PureComponent<Props> {
   render() {
     const {
       classes,
@@ -101,14 +85,41 @@ class AppBar extends PureComponent {
   }
 }
 
-AppBar.propTypes = {
-  classes: PropTypes.shape({}).isRequired,
-  email: PropTypes.string.isRequired,
-  fullName: PropTypes.string.isRequired,
-  initials: PropTypes.string.isRequired,
-  onDrawerToggleOpen: PropTypes.func.isRequired,
-  logout: PropTypes.func.isRequired, // redux
-};
+const styles = theme => ({
+  appBar: {
+    position: 'absolute',
+    zIndex: theme.zIndex.drawer + 1,
+  },
+  menuButton: {
+    marginLeft: 12,
+    marginRight: 20,
+  },
+  header: {
+    flex: '1 0 auto',
+  },
+  avatar: {
+    margin: '10px 16px 10px 10px',
+    color: '#fff',
+    backgroundColor: deepOrange[500],
+  },
+  popover_detailsSection: {
+    display: 'flex',
+  },
+  popover_bigAvatar: {
+    height: 80,
+    width: 80,
+    margin: 14,
+    fontSize: '2rem',
+  },
+  popover_nameAndEmail: {
+    marginTop: 14,
+  },
+  popover_actionsSection: {
+    display: 'flex',
+    justifyContent: 'center',
+    padding: '8px 0',
+  },
+});
 
 const mapStateToProps = state => ({
   email: getEmail(state),

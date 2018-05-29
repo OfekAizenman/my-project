@@ -1,7 +1,9 @@
-export const getItem = (key) => {
+// @flow
+
+export const getItem = (key: string) => {
   try {
-    const item = localStorage.getItem(key);
-    if (item === null) {
+    const item : ?string = localStorage.getItem(key);
+    if (item == null) {
       return undefined;
     }
     return JSON.parse(item);
@@ -10,7 +12,7 @@ export const getItem = (key) => {
   }
 };
 
-export const saveItem = (key, data) => {
+export const saveItem = (key: string, data: any) => {
   try {
     const item = JSON.stringify(data);
     localStorage.setItem(key, item);

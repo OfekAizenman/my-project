@@ -1,9 +1,61 @@
+// @flow
+
 import React, { Component } from 'react';
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import { drawerWidth } from '../../common/constants';
+import { type RouteType } from '../../common/routes';
+
+
+type Props = {
+  classes: {
+    content: {},
+    transition: {},
+    contentShift: {},
+  },
+  className: ?string,
+  drawerOpen: boolean,
+  routes: Array<RouteType>
+}
+
+// eslint-disable-next-line react/prefer-stateless-function
+class Main extends Component<Props> {
+  static defaultProps = {
+    className: '',
+  };
+
+  render() {
+    const {
+      classes,
+      className,
+      drawerOpen,
+      routes,
+    } = this.props;
+
+    const routeComponents = routes.map(route => (
+      <Route
+        exact={route.exact}
+        path={route.path}
+        component={route.component}
+        key={route.id}
+      />
+    ));
+
+    const contentClasses = classNames(classes.content, {
+      // $FlowFixMe
+      [classes.contentShift]: drawerOpen,
+    }, className);
+
+    return (
+      <main className={contentClasses}>
+        <Switch>
+          {routeComponents}
+        </Switch>
+      </main>
+    );
+  }
+}
 
 const styles = theme => ({
   content: {
@@ -31,50 +83,4 @@ const styles = theme => ({
   },
 });
 
-const propTypes = {
-  classes: PropTypes.shape({}).isRequired,
-  className: PropTypes.string,
-  drawerOpen: PropTypes.bool.isRequired,
-  routes: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
-};
-
-const defaultProps = {
-  className: '',
-};
-
-// eslint-disable-next-line react/prefer-stateless-function
-class Main extends Component {
-  render() {
-    const {
-      classes,
-      className,
-      drawerOpen,
-      routes,
-    } = this.props;
-
-    const routeComponents = routes.map(route => (
-      <Route
-        exact={route.exact}
-        path={route.path}
-        component={route.component}
-        key={route.id}
-      />
-    ));
-
-    const contentClasses = classNames(classes.content, {
-      [classes.contentShift]: drawerOpen,
-    }, className);
-
-    return (
-      <main className={contentClasses}>
-        <Switch>
-          {routeComponents}
-        </Switch>
-      </main>
-    );
-  }
-}
-
-Main.propTypes = propTypes;
-Main.defaultProps = defaultProps;
 export default withStyles(styles)(Main);

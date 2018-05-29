@@ -1,5 +1,7 @@
+// @flow
+
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import type { Element } from 'react';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -13,52 +15,44 @@ import Typography from '@material-ui/core/Typography';
 
 const ITEM_HEIGHT = 48;
 
-const styles = theme => ({
-  card: {
-    padding: 16,
-    color: theme.palette.text.secondary,
+type Props = {
+  classes: {
+    card: {},
+    cardHeader: {},
+    cardContent: {},
+    actions: {},
+    hidden: {},
   },
-  cardHeader: {
-    color: 'rgba(0, 0, 0, 0.8)',
-    fontSize: 18,
-  },
-  cardContent: {
-    color: 'rgba(0, 0, 0, 1)',
-    fontSize: 26,
-
-  },
-  actions: {
-    flexDirection: 'row-reverse',
-  },
-  hidden: {
-    visibility: 'hidden',
-  },
-});
-
-const propTypes = {
-  classes: PropTypes.shape({}).isRequired,
-  description: PropTypes.string,
-  id: PropTypes.string.isRequired,
-  onDelete: PropTypes.func.isRequired,
-  title: PropTypes.string,
+  description?: string,
+  id: string,
+  onDelete: Function,
+  title?: string,
 };
 
-const defaultProps = {
-  description: '',
-  title: '',
-};
+type State = {
+  anchorEl: null | Element<typeof IconButton>,
+  hover: boolean,
+}
 
-class Note extends Component {
+class Note extends Component<Props, State> {
+  static defaultProps = {
+    description: '',
+    title: '',
+  }
+
   constructor(props) {
     super(props);
 
-    this.state = { anchorEl: null, hover: false };
+    this.state = {
+      anchorEl: null,
+      hover: false,
+    };
 
-    this.handleDelete = this.handleDelete.bind(this);
-    this.handleMenuClose = this.handleMenuClose.bind(this);
-    this.handleMenuOpen = this.handleMenuOpen.bind(this);
-    this.handleMouseHover = this.handleMouseHover.bind(this);
-    this.handleMouseLeave = this.handleMouseLeave.bind(this);
+    (this: any).handleDelete = this.handleDelete.bind(this);
+    (this: any).handleMenuClose = this.handleMenuClose.bind(this);
+    (this: any).handleMenuOpen = this.handleMenuOpen.bind(this);
+    (this: any).handleMouseHover = this.handleMouseHover.bind(this);
+    (this: any).handleMouseLeave = this.handleMouseLeave.bind(this);
   }
 
   handleDelete() {
@@ -87,12 +81,12 @@ class Note extends Component {
     const { anchorEl, hover } = this.state;
 
     const actionClasses = classNames({
+      // $FlowFixMe
       [classes.hidden]: !hover,
     });
 
     return (
       <Card
-        className={classes.paper}
         onMouseOver={this.handleMouseHover}
         onFocus={this.handleMouseHover}
         onMouseLeave={this.handleMouseLeave}
@@ -133,6 +127,26 @@ class Note extends Component {
   }
 }
 
-Note.propTypes = propTypes;
-Note.defaultProps = defaultProps;
+const styles = theme => ({
+  card: {
+    padding: 16,
+    color: theme.palette.text.secondary,
+  },
+  cardHeader: {
+    color: 'rgba(0, 0, 0, 0.8)',
+    fontSize: 18,
+  },
+  cardContent: {
+    color: 'rgba(0, 0, 0, 1)',
+    fontSize: 26,
+
+  },
+  actions: {
+    flexDirection: 'row-reverse',
+  },
+  hidden: {
+    visibility: 'hidden',
+  },
+});
+
 export default withStyles(styles)(Note);

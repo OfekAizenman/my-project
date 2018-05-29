@@ -1,23 +1,27 @@
+// @flow
+
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import MuiSnackbar from '@material-ui/core/Snackbar';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 
-const styles = theme => ({
-  close: {
-    width: theme.spacing.unit * 4,
-    height: theme.spacing.unit * 4,
+type Props = {
+  classes: {
+    close: {},
   },
-});
+  handleClose: Function,
+  handleUndo: Function,
+  open: boolean,
+  message: string,
+};
 
-class Snackbar extends Component {
+class Snackbar extends Component<Props> {
   constructor(props) {
     super(props);
 
-    this.handleClose = this.handleClose.bind(this);
+    (this: any).handleClose = this.handleClose.bind(this);
   }
 
   handleClose(event, reason) {
@@ -65,12 +69,11 @@ class Snackbar extends Component {
   }
 }
 
-Snackbar.propTypes = {
-  classes: PropTypes.shape({}).isRequired,
-  handleClose: PropTypes.func.isRequired,
-  handleUndo: PropTypes.func.isRequired,
-  open: PropTypes.bool.isRequired,
-  message: PropTypes.string.isRequired,
-};
+const styles = theme => ({
+  close: {
+    width: theme.spacing.unit * 4,
+    height: theme.spacing.unit * 4,
+  },
+});
 
 export default withStyles(styles)(Snackbar);

@@ -1,36 +1,34 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+// @flow
+
+import React, { Component, type Element } from 'react';
 import classNames from 'classnames';
 import Avatar from '@material-ui/core/Avatar';
 import Popover from '@material-ui/core/Popover';
 import { withStyles } from '@material-ui/core/styles';
 
-const styles = theme => ({
-  avatar: {
-    cursor: 'pointer',
-    margin: 10,
-  },
-  popover: {
-    width: 350,
-  },
-});
 
-const propTypes = {
-  avatarClassName: PropTypes.string,
-  children: PropTypes.node,
-  classes: PropTypes.shape({}).isRequired,
-  innerText: PropTypes.string.isRequired,
-  popover: PropTypes.bool,
+type Props = {
+  avatarClassName?: string,
+  children?: Element<any>,
+  classes: {
+    avatar: {},
+    popover: {},
+  },
+  innerText: string,
+  popover?: boolean,
 };
 
-const defaultProps = {
-  avatarClassName: '',
-  children: null,
-  popover: false,
-};
+type State = {
+  anchorEl: Element<any> | null,
+}
 
+class ExtendedAvatar extends Component<Props, State> {
+  static defaultProps = {
+    avatarClassName: '',
+    children: null,
+    popover: false,
+  }
 
-class ExtendedAvatar extends Component {
   constructor(props) {
     super(props);
 
@@ -38,8 +36,8 @@ class ExtendedAvatar extends Component {
       anchorEl: null,
     };
 
-    this.handleClick = this.handleClick.bind(this);
-    this.handleClose = this.handleClose.bind(this);
+    (this: any).handleClick = this.handleClick.bind(this);
+    (this: any).handleClose = this.handleClose.bind(this);
   }
 
   handleClick(event) {
@@ -96,6 +94,14 @@ class ExtendedAvatar extends Component {
   }
 }
 
-ExtendedAvatar.propTypes = propTypes;
-ExtendedAvatar.defaultProps = defaultProps;
+const styles = () => ({
+  avatar: {
+    cursor: 'pointer',
+    margin: 10,
+  },
+  popover: {
+    width: 350,
+  },
+});
+
 export default withStyles(styles)(ExtendedAvatar);
